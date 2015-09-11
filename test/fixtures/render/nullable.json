@@ -1,0 +1,222 @@
+{
+  "_version": "4.0",
+  "metadata": [],
+  "name": "",
+  "description": "<API description>\n\n",
+  "element": "category",
+  "resourceGroups": [
+    {
+      "element": "category",
+      "resources": [
+        {
+          "element": "resource",
+          "name": "",
+          "description": "",
+          "uriTemplate": "/",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "",
+              "description": "",
+              "method": "GET",
+              "parameters": [],
+              "attributes": {
+                "relation": "",
+                "uriTemplate": ""
+              },
+              "content": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "content": "{\n  \"s1\": \"obihann\",\n  \"s2\": \"null\"\n}",
+                      "schema": "",
+                      "content": [
+                        {
+                          "element": "dataStructure",
+                          "content": [
+                            {
+                              "element": "object",
+                              "content": [
+                                {
+                                  "element": "member",
+                                  "attributes": {
+                                    "typeAttributes": [
+                                      "required"
+                                    ]
+                                  },
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "s1"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "attributes": {
+                                        "samples": [
+                                          "obihann"
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "element": "member",
+                                  "attributes": {
+                                    "typeAttributes": [
+                                      "required",
+                                      "nullable"
+                                    ]
+                                  },
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "s2"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "attributes": {
+                                        "samples": [
+                                          "null"
+                                        ],
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "content": []
+        }
+      ]
+    }
+  ],
+  "content": [
+    {
+      "element": "category",
+      "content": [
+        {
+          "element": "resource",
+          "name": "",
+          "description": "",
+          "uriTemplate": "/",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "",
+              "description": "",
+              "method": "GET",
+              "parameters": [],
+              "attributes": {
+                "relation": "",
+                "uriTemplate": ""
+              },
+              "content": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "content": "{\n  \"s1\": \"obihann\",\n  \"s2\": \"null\"\n}",
+                      "schema": "",
+                      "content": [
+                        {
+                          "element": "dataStructure",
+                          "content": [
+                            {
+                              "element": "object",
+                              "content": [
+                                {
+                                  "element": "member",
+                                  "attributes": {
+                                    "typeAttributes": [
+                                      "required",
+                                    ]
+                                  },
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "s1"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "attributes": {
+                                        "samples": [
+                                          "obihann"
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "element": "member",
+                                  "attributes": {
+                                    "typeAttributes": [
+                                      "required",
+                                      "nullable"
+                                    ]
+                                  },
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "s2"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "attributes": {
+                                        "samples": [
+                                          "null"
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "content": []
+        }
+      ]
+    }
+  ]
+}
+

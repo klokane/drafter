@@ -89,9 +89,9 @@ namespace drafter {
             }
 
             if (sample) {
-                refract::ArrayElement* a = new refract::ArrayElement;
-                a->push_back(refract::IElement::Create(LiteralTo<typename E::ValueType>(literal)));
-                element->attributes[SerializeKey::Samples] = a;
+                refract::ArrayElement* samples = new refract::ArrayElement;
+                samples->push_back(refract::IElement::Create(LiteralTo<typename E::ValueType>(literal)));
+                element->attributes[SerializeKey::Samples] = samples;
             }
             else {
                 element->set(LiteralTo<typename E::ValueType>(literal));
@@ -236,9 +236,9 @@ namespace drafter {
         template<typename V>
         struct Store {
             void operator()(RefractElements& elements, const V& v) {
-                T* e = new T;
-                e->set(v);
-                elements.push_back(e);
+                T* element = new T;
+                element->set(v);
+                elements.push_back(element);
             }
         };
 
