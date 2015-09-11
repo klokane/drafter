@@ -161,6 +161,9 @@ sos::Array WrapTypeAttributes(const mson::TypeAttributes& typeAttributes)
     else if (typeAttributes & mson::DefaultTypeAttribute) {
         typeAttributesArray.push(sos::String("default"));
     }
+    else if (typeAttributes & mson::NullableTypeAttribute) {
+        typeAttributesArray.push(sos::String("nullable"));
+    }
     else if (typeAttributes & mson::SampleTypeAttribute) {
         typeAttributesArray.push(sos::String("sample"));
     }
@@ -789,8 +792,7 @@ bool IsElementResourceGroup(const Element& element)
 #if _WITH_REFRACT_
 typedef std::vector<const snowcrash::DataStructure*> DataStructures;
 
-void findNamedTypes(const snowcrash::Elements& elements, DataStructures& found)
-{
+void findNamedTypes(const snowcrash::Elements& elements, DataStructures& found) {
     for (snowcrash::Elements::const_iterator i = elements.begin() ; i != elements.end() ; ++i) {
 
         if (i->element == snowcrash::Element::DataStructureElement) {

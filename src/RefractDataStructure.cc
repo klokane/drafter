@@ -41,6 +41,9 @@ namespace drafter {
         if (ta & mson::FixedTypeAttribute) {
             attr->push_back(refract::IElement::Create(SerializeKey::Fixed));
         }
+        if (ta & mson::NullableTypeAttribute) {
+            attr->push_back(refract::IElement::Create(SerializeKey::Nullable));
+        }
 
         if (attr->value.empty()) {
             delete attr;
@@ -86,9 +89,9 @@ namespace drafter {
             }
 
             if (sample) {
-                refract::ArrayElement* samples = new refract::ArrayElement;
-                samples->push_back(refract::IElement::Create(LiteralTo<typename E::ValueType>(literal)));
-                element->attributes[SerializeKey::Samples] = samples;
+                refract::ArrayElement* a = new refract::ArrayElement;
+                a->push_back(refract::IElement::Create(LiteralTo<typename E::ValueType>(literal)));
+                element->attributes[SerializeKey::Samples] = a;
             }
             else {
                 element->set(LiteralTo<typename E::ValueType>(literal));
@@ -233,9 +236,9 @@ namespace drafter {
         template<typename V>
         struct Store {
             void operator()(RefractElements& elements, const V& v) {
-                T* element = new T;
-                element->set(v);
-                elements.push_back(element);
+                T* e = new T;
+                e->set(v);
+                elements.push_back(e);
             }
         };
 
@@ -592,6 +595,7 @@ namespace drafter {
         return !value.valueDefinition.typeDefinition.typeSpecification.name.symbol.literal.empty();
     }
 
+
     struct PropertyTrait {
         typedef refract::MemberElement ElementType;
         typedef mson::PropertyMember InputType;
@@ -631,7 +635,7 @@ namespace drafter {
                 return Trait::template Invoke<refract::ObjectElement>(input, defaultNestedType);
 
             case mson::UndefinedTypeName:
-            {
+
                 if (ValueHasChildren(input)) {
                     return Trait::template Invoke<refract::ArrayElement>(input, defaultNestedType);
                 }
@@ -652,7 +656,7 @@ namespace drafter {
                    default:
                        throw std::logic_error("Nested complex types are not Implemented");
                 }
-            }
+
 
             default:
                 throw std::runtime_error("Unhandled type of Member");
@@ -696,6 +700,7 @@ namespace drafter {
         return ref;
     }
 
+
     static refract::IElement* MsonElementToRefract(const mson::Element& mse, const mson::BaseTypeName defaultNestedType/* = mson::StringTypeName */)
     {
         switch (mse.klass) {
@@ -725,25 +730,25 @@ namespace drafter {
         using namespace refract;
         typedef T ElementType;
 
-        ElementType* element = new ElementType;
-        SetElementType(element, ds.typeDefinition);
+        ElementType* e = new ElementType;
+        SetElementType(e, ds.typeDefinition);
 
         if (!ds.name.symbol.literal.empty()) {
-            element->meta[SerializeKey::Id] = IElement::Create(ds.name.symbol.literal);
+            e->meta[SerializeKey::Id] = IElement::Create(ds.name.symbol.literal);
         }
 
         TypeSectionData<T> data;
 
-        TransformTypeSectionData<T>(ds, element, data);
+        TransformTypeSectionData<T>(ds, e, data);
 
         std::string description;
         std::for_each(data.descriptions.begin(), data.descriptions.end(), Join(description));
 
         if(!description.empty()) {
-            element->meta[SerializeKey::Description] = IElement::Create(description);
+            e->meta[SerializeKey::Description] = IElement::Create(description);
         }
 
-        return element;
+        return e;
     }
 
 

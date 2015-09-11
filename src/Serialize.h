@@ -71,6 +71,7 @@ namespace drafter {
         static const std::string Type;
         static const std::string Required;
         static const std::string Default;
+        static const std::string Nullable;
         static const std::string Example;
         static const std::string Values;
 
@@ -150,7 +151,7 @@ namespace drafter {
     };
 
     /**
-     * \brief functor pattern to translate _collection_ into sos::Array on serialization
+     * \brief functor pattern to translate _collection_ into sos::Array on serialization 
      * \requests for collection - must define typedef member ::const_iterator
      *
      * usage:
