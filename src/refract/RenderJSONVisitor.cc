@@ -10,6 +10,7 @@
 #include "Visitors.h"
 #include "sosJSON.h"
 #include <sstream>
+#include <iostream>
 
 namespace refract
 {
@@ -106,6 +107,16 @@ namespace refract
         return TypeQueryVisitor::as<T>(*(a->value.begin()));
     }
 
+    template<typename T>
+    const T* getNullable(const T& e) {
+        IElement::MemberElementCollection::const_iterator ta = e.attributes.find("typeAttributes");
+        
+        // from within ta we have to look for the 'nullable' attribute
+        
+        // this should return the new value if nullable
+        return NULL;
+    }
+
     template<typename T, typename R = typename T::ValueType>
     struct getValue {
         const T& element;
@@ -124,16 +135,22 @@ namespace refract
             //             - m2: b
             // ```
             // because `o` has members `m1` and  `m2` , but members has no sed value
+
             if (!element.empty()) {
                 return &element.value;
             }
 
             if (const T* s = getSample(element)) {
+                std::cout << "sample" << std::endl;
                 return &s->value;
             }
 
             if (const T* d = getDefault(element)) {
                 return &d->value;
+            }
+            
+            if (const T* n = getNullable(element)) {
+                // return the new value which should be null
             }
 
             return &element.value;

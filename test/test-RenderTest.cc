@@ -110,7 +110,7 @@ TEST_CASE("Testing render of an object mixin w/ samples", "[render]")
     REQUIRE(FixtureHelper::handleBlueprintJSON("test/fixtures/render/mixin-object-sample"));
 }
 
-TEST_CASE("Testing render of an primitive types w/ samplesa", "[render]")
+TEST_CASE("Testing render of an primitive types w/ nullable", "[render]")
 {
     REQUIRE(FixtureHelper::handleBlueprintJSON("test/fixtures/render/nullable"));
 }
