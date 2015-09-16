@@ -7,6 +7,7 @@
 //
 #include "Element.h"
 #include "Visitors.h"
+#include <iostream>
 
 namespace refract
 {
@@ -22,6 +23,17 @@ namespace refract
             for (iterator it = collection.begin(); it != collection.end(); ++it) {
                 SerializeCompactVisitor s;
                 s.visit(*(*it));
+                
+                /*if( s.value().type == 5)
+                {
+                    std::cerr << s.value().type << " : " << s.key() << std::endl;
+                    
+                    for(int x = 0; x <= s.value().array().size(); x++)
+                    {
+                        std::cerr << s.value().array()[0].type << " : " << s.value().array()[0].str << std::endl;
+                    }
+                }*/
+                
                 result.set(s.key(), s.value());
             }
 

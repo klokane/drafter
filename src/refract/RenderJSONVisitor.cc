@@ -86,6 +86,8 @@ namespace refract
         if (i == e.attributes.end()) {
             return NULL;
         }
+        
+        std::cerr << "default" << std::endl;
 
         return TypeQueryVisitor::as<T>((*i)->value.second);
     }
@@ -103,6 +105,8 @@ namespace refract
         if (!a || a->value.empty()) {
             return NULL;
         }
+        
+        std::cerr << "samples" << std::endl;
 
         return TypeQueryVisitor::as<T>(*(a->value.begin()));
     }
@@ -111,9 +115,25 @@ namespace refract
     const T* getNullable(const T& e) {
         IElement::MemberElementCollection::const_iterator ta = e.attributes.find("typeAttributes");
         
-        // from within ta we have to look for the 'nullable' attribute
+        if (ta == e.attributes.end()) {
+            return NULL;
+        }
         
-        // this should return the new value if nullable
+        SerializeCompactVisitor s;
+        s.visit(*(*ta));
+        
+        std::cerr << s.key() << std::endl;
+        
+        if(s.value().type == 5)
+        {
+            std::cerr << s.key() << std::endl;
+            
+            for(int x = 0; x <= s.value().array().size(); x++)
+            {
+                std::cerr << s.value().array()[0].str << std::endl;
+            }
+        }
+        
         return NULL;
     }
 
@@ -141,7 +161,6 @@ namespace refract
             }
 
             if (const T* s = getSample(element)) {
-                std::cout << "sample" << std::endl;
                 return &s->value;
             }
 
@@ -150,7 +169,7 @@ namespace refract
             }
             
             if (const T* n = getNullable(element)) {
-                // return the new value which should be null
+                return &n->value;
             }
 
             return &element.value;
