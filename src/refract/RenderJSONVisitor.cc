@@ -64,11 +64,42 @@ namespace refract
         e.content(*this);
     }
 
+    template<typename T>
+    const bool isNullable(const T& e) {
+        IElement::MemberElementCollection::const_iterator ta = e.attributes.find("typeAttributes");
+        
+        if (ta == e.attributes.end()) {
+            return false;
+        }
+
+        ArrayElement* attrs = TypeQueryVisitor::as<ArrayElement>((*ta)->value.second);
+
+        if (!attrs) {
+            return false;
+        }
+
+        for (ArrayElement::ValueType::const_iterator it = attrs->value.begin() ; it != attrs->value.end() ; ++it ) {
+            StringElement* attr = TypeQueryVisitor::as<StringElement>(*it);
+            if (!attr) {
+                continue;
+            }
+            if (attr->value == "nullable") {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     void RenderJSONVisitor::visit(const MemberElement& e) {
         RenderJSONVisitor renderer;
 
         if (e.value.second) {
-            renderer.visit(*e.value.second);
+            if (isNullable(e)) {
+                renderer.result = sos::Null();
+            } else {
+                renderer.visit(*e.value.second);
+            }
         }
 
         if (StringElement* str = TypeQueryVisitor::as<StringElement>(e.value.first)) {
@@ -111,31 +142,6 @@ namespace refract
         return TypeQueryVisitor::as<T>(*(a->value.begin()));
     }
 
-    template<typename T>
-    const T* getNullable(const T& e) {
-        IElement::MemberElementCollection::const_iterator ta = e.attributes.find("typeAttributes");
-        
-        if (ta == e.attributes.end()) {
-            return NULL;
-        }
-        
-        SerializeCompactVisitor s;
-        s.visit(*(*ta));
-        
-        std::cerr << s.key() << std::endl;
-        
-        if(s.value().type == 5)
-        {
-            std::cerr << s.key() << std::endl;
-            
-            for(int x = 0; x <= s.value().array().size(); x++)
-            {
-                std::cerr << s.value().array()[0].str << std::endl;
-            }
-        }
-        
-        return NULL;
-    }
 
     template<typename T, typename R = typename T::ValueType>
     struct getValue {
@@ -167,11 +173,11 @@ namespace refract
             if (const T* d = getDefault(element)) {
                 return &d->value;
             }
-            
-            if (const T* n = getNullable(element)) {
-                return &n->value;
-            }
 
+            if (element.empty() && isNullable(element)) {
+                return NULL;
+            }
+            
             return &element.value;
         }
     };
@@ -254,7 +260,7 @@ namespace refract
 
         if (v) {
             assign(sos::String(*v));
-        }
+        } 
     }
 
     void RenderJSONVisitor::visit(const NumberElement& e) {
